@@ -100,18 +100,18 @@
 #### 5.1.1. 채팅방 목록
 
 - 채팅방 목록은 사용자가 참여한 채팅방의 마지막 메시지 시간을 기준으로 내림차순으로 정렬해서 표시합니다.<br>
-[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/0f79e617bf6ee8838ceb4415ea6be279669d43cc/somomo/src/main/resources/mappers/chat-mapper.xml#L138-L175)
+[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/resources/mappers/chat-mapper.xml#L138-L175)
 
 - 각각의 채팅방에는 마지막 메시지 내용과 시간이 표시되고, 읽지 않은 메시지 수를 알림 배지로 보여줍니다.<br>
-[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/9f75de21a344c7e56cf2bea4f01bd5ffd91be90b/somomo/src/main/webapp/WEB-INF/views/chat/chatMain.jsp#L538-L581)
+[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/webapp/WEB-INF/views/chat/chatMain.jsp#L538-L581)
 
 - 실시간으로 변경되는 것을 확인할 수 있도록 setInterval을 이용해 지정한 시간마다 변경된 내용을 불러와 줍니다.
 
 <p align="center"><img src="https://user-images.githubusercontent.com/102894238/199704471-488dd5bc-279e-43a1-84ad-d15dec55f785.gif"/></p>
 
 - 사용자가 채팅방에 참여한 시간보다 이전에 다른 사용자가 보낸 마지막 메시지가 있다면, 해당 사용자의 채팅방 목록에는 마지막 메시지와 시간이 표시되지 않습니다.<br>
-[:pushpin:코드 보기 1](https://github.com/doitchu93/somomo/blob/06ca4e094b02917e20e0eac874ddbbed2c6ef017/somomo/src/main/java/com/kh/somomo/chat/controller/ChatController.java#L148-L162)<br>
-[:pushpin:코드 보기 2](https://github.com/doitchu93/somomo/blob/06ca4e094b02917e20e0eac874ddbbed2c6ef017/somomo/src/main/webapp/WEB-INF/views/chat/chatMain.jsp#L552-L557)
+[:pushpin:코드 보기 1](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/java/com/kh/somomo/chat/controller/ChatController.java#L148-L162)<br>
+[:pushpin:코드 보기 2](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/webapp/WEB-INF/views/chat/chatMain.jsp#L552-L557)
 
 #### 5.1.2. 채팅 영역
 
@@ -124,7 +124,7 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/102894238/199720220-298e57c0-65b1-45ed-838d-c563fc32165a.gif"/></p>
 
 - 선택한 채팅방의 메시지를 AJAX를 이용해 DB에서 조회 후, 반복문을 이용해 HTML로 표시해줍니다.<br>
-[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/b3ef888b9b5af57e6ad565e9a51152274454b0f2/somomo/src/main/webapp/WEB-INF/views/chat/chatMain.jsp#L677-L729)
+[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/webapp/WEB-INF/views/chat/chatMain.jsp#L677-L731)
 
 - 가져온 메시지의 날짜를 비교해서 만약 날짜 표시가 없거나 다르다면 가져온 메시지의 날짜를 표시합니다.
 
@@ -143,19 +143,19 @@
 ### 5.2. 실시간 채팅
 
 - 채팅 내용 전달 시 메시지 내용뿐만 아니라 작성자 정보와 채팅방 번호를 같이 보내기 위해 JSON을 사용했습니다.<br>
-[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/edb6408e87765d2be91a284be2d7abc6f6275115/somomo/src/main/webapp/WEB-INF/views/chat/chatMain.jsp#L227-L246)
+[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/webapp/WEB-INF/views/chat/chatMain.jsp#L227-L246)
 
 - 웹 소켓 서버에서 수신한 JSON Data를 Java 객체로 변환하기 위해 Jackson 라이브러리의 ObjectMapper를 사용했습니다.<br>
-[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/edb6408e87765d2be91a284be2d7abc6f6275115/somomo/src/main/java/com/kh/somomo/chat/controller/ChatWebSocketServer.java#L62-L66)
+[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/java/com/kh/somomo/chat/controller/ChatWebSocketServer.java#L62-L66)
 
 - 채팅방을 선택하면 특정 메시지를 발송하여 웹 소켓 서버 내에서 채팅방을 구분할 수 있도록 Map을 이용해 담아줍니다.
 - 만약 사용자가 웹 소켓 서버의 채팅방을 들어가려 할 때 웹 소켓 서버 내에 아직 채팅방이 생성되지 않았다면 채팅방을 생성하고 입장하도록 합니다.
 - 다른 사용자가 같은 채팅방에 입장할 때는 채팅방 생성 없이 바로 입장할 수 있습니다.<br>
-[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/edb6408e87765d2be91a284be2d7abc6f6275115/somomo/src/main/java/com/kh/somomo/chat/controller/ChatWebSocketServer.java#L73-L105)
+[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/java/com/kh/somomo/chat/controller/ChatWebSocketServer.java#L73-L105)
 
 - 웹 소켓 내의 채팅방에 들어간 뒤 채팅 메시지를 수 / 발신할 수 있습니다.
 - 전달받은 메시지는 채팅 DB에 저장되고 저장된 DB를 다시 불러와 채팅방에 채팅방 DB에 저장된 시간을 기준으로 표시될 수 있도록 처리했습니다.<br>
-[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/edb6408e87765d2be91a284be2d7abc6f6275115/somomo/src/main/java/com/kh/somomo/chat/controller/ChatWebSocketServer.java#L107-L138)
+[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/java/com/kh/somomo/chat/controller/ChatWebSocketServer.java#L107-L138)
 
 </div></details>
 
@@ -198,7 +198,7 @@
 #### 해결
 
 - foreach문으로 chatRoomList 안의 session을 전부 찾아서 제거할 수 있게 수정<br>
-[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/cc9e938d9082b4a6881485a22f00db12c939b4e3/somomo/src/main/java/com/kh/somomo/chat/controller/ChatWebSocketServer.java#L41-L57)
+[:pushpin:코드 보기](https://github.com/doitchu93/somomo/blob/9aff11c0fd5add4f75c37a5bba5ac09157be5b71/somomo/src/main/java/com/kh/somomo/chat/controller/ChatWebSocketServer.java#L41-L57)
 
 </div></details>
 
