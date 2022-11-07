@@ -1,0 +1,301 @@
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #F7F8F9; */
+    background-color: white;
+}
+
+section{
+    height: 100vh;
+    min-width: 900px;
+    max-width: 900px;
+    background-color: white;
+}
+
+/* 카테고리 */
+
+span.msg,
+span.choose {
+  color: #555;
+  padding: 5px 0 10px;
+  display: inherit
+}
+.container {
+  width: 500px;
+  margin: 50px auto 0;
+  text-align: center
+}
+
+/*Styling Selectbox*/
+.category-outer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdown {
+  width: 300px;
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 2px rgb(204, 204, 204);
+  transition: all .5s ease;
+  position: relative;
+  font-size: 14px;
+  color: #474747;
+  height: 100%;
+  text-align: left
+}
+.dropdown .select {
+    cursor: pointer;
+    display: block;
+    padding: 10px
+}
+.dropdown .select > i {
+    font-size: 13px;
+    color: #888;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    float: right;
+    line-height: 20px
+}
+.dropdown:hover {
+    box-shadow: 0 0 4px rgb(204, 204, 204)
+}
+.dropdown:active {
+    background-color: #f8f8f8
+}
+.dropdown.active:hover,
+.dropdown.active {
+    box-shadow: 0 0 4px rgb(204, 204, 204);
+    border-radius: 2px 2px 0 0;
+    background-color: #f8f8f8
+}
+.dropdown.active .select > i {
+    transform: rotate(-90deg)
+}
+.dropdown .dropdown-menu {
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    left: 0;
+    margin-top: 1px;
+    box-shadow: 0 1px 2px rgb(204, 204, 204);
+    border-radius: 0 1px 2px 2px;
+    overflow: hidden;
+    display: none;
+    max-height: 144px;
+    overflow-y: auto;
+    z-index: 9
+}
+.dropdown .dropdown-menu li {
+    padding: 10px;
+    transition: all .2s ease-in-out;
+    cursor: pointer
+} 
+.dropdown .dropdown-menu {
+    padding: 0;
+    list-style: none
+}
+.dropdown .dropdown-menu li:hover {
+    background-color: #f2f2f2
+}
+.dropdown .dropdown-menu li:active {
+    background-color: #e2e2e2
+}
+
+/* 카테고리 */
+#groupName{
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid var(--black-light-color);
+    font-size: 30px;
+    /* background-color: #F7F8F9;  */
+    background-color: white;
+    outline: none;
+}
+
+#groupName:hover{
+    border-bottom: 1px solid black;
+}
+
+.img-sheet{
+    display: flex;
+    margin-top: 30px;
+
+}
+
+.main-img img{
+	margin-top: 13px;
+    width: 300px;
+    height: 225px;
+    border-radius: 10px;
+}
+
+.img-list{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    justify-content: space-between;
+}
+
+.img-list .list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.list li{
+    width: 120px;
+    height: 100px;
+    margin: 5px 10px;
+}
+
+.list li:hover{
+  transform:scale(0.95);
+    cursor:pointer;
+    transition: all 0.4s ease
+}
+
+.list img{
+    width: 120px;
+    height: 100px;
+    margin: 0 6px;
+    border-radius: 10px;
+}
+
+
+.groupDesc-sheet{
+    margin-top: 30px;
+}
+
+.groupDesc-sheet textarea{
+    border-radius: 10px;
+    width: 100%;
+    height: 100px;
+    resize: none;
+    outline: none;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.groupType-sheet{
+    margin-top: 30px;
+}
+
+.groupType-sheet .content{
+    display: flex;
+    flex-direction: row;
+}
+
+.groupType-sheet .head{
+    margin-bottom: 10px;
+}
+
+.content-row{
+    width: 33%;
+    margin: 0px 10px;
+}
+
+.content-row div{
+    margin: 3px 0;
+}
+
+.button-area{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.button-area button{
+    margin: 0 10px;
+    width: 130px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid var(--black-light-color);
+    cursor: pointer;
+}
+
+.selectedImg{
+    opacity: 0.5;
+
+}
+
+.middle{
+    width: 120px;
+    height: 100px;
+    position: relative;
+    bottom: 105px;
+    left: 6px;
+    background-color: #FEC8C6;
+    opacity: 0.5;
+    border-radius: 10px;
+}
+
+.middle i{
+    position: relative;
+    top: 5px;
+    left: 15px;
+    font-size: 100px;
+    color: white;
+}
+
+.display-none{
+    display: none;
+}
+
+/* ------- 가입 질문 모달 --------- */
+.modal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 99; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px; /* Could be more or less, depending on screen size */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-body{
+    margin-top: 10px;
+}
+
+.modal-body textarea{
+    resize: none;
+    width: 300px;
+    height: 150px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modal-body textarea:focus{
+    border: 1px solid #aaa;
+}
+
+.modal-foot{
+    margin-top: 10px;
+}
+
+.modal-foot button{
+    width: 50px;
+    height: 25px;
+    margin: 0 10px;
+    border: 1px solid #aaa;
+}

@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="feedMapper">
+	
+	<resultMap id="feedBoardResultSet" type="feedBoard">
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="BOARD_WRITER" property="boardWriter" />
+		<result column="REGION_NO" property="regionNo" />
+		<result column="BOARD_TYPE" property="boardType" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="BOARD_CONTENT" property="boardContent" />
+		<result column="COUNT" property="count" />
+		<result column="BOARD_DATE" property="boardDate" />
+		<result column="MEET_PLACE" property="meetPlace" />
+		<result column="LONGITUDE" property="longitude" />
+		<result column="LATITUDE" property="latitude" />
+		<result column="MEET_DATE" property="meetDate" />
+		<result column="MEET_TOTAL" property="meetTotal" />
+		<result column="MEET_GENDER" property="meetGender" />
+		<result column="MEET_AGE" property="meetAge" />
+		<result column="REGION_NAME" property="regionName" />
+		<result column="NICKNAME" property="nickname" />
+		<result column="PROFILE_IMG" property="profileImg" />
+		<result column="COUNT_REPLY" property="countReply" />
+		<result column="COUNT_MEMBER" property="countMember" />
+		<result column="LIKE_CHECK" property="likeCheck" />
+		<result column="COUNT_LIKE" property="countLike" />
+		<result column="ROOM_NO" property="roomNo" />
+	</resultMap>
+	
+	<resultMap id="regionCategoryResultSet" type="regionCategory">
+		<result column="REGION_NO" property="regionNo" />
+		<result column="REGION_NAME" property="regionName" />
+	</resultMap>
+	
+	<resultMap id="attachmentResultSet" type="attachment">
+		<result column="FILE_NO" property="fileNo" />
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+	</resultMap>
+	
+	<resultMap id="replyResultSet" type="reply">
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="REPLY_WRITER" property="replyWriter" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="RGROUP" property="rgroup" />
+		<result column="RDEPTH" property="rdepth" />
+		<result column="REPLY_DATE" property="replyDate" />
+		<result column="NICKNAME" property="nickname" />
+		<result column="PROFILE_IMG" property="profileImg" />
+		<result column="IS_LAST_RGROUP_REPLY" property="isLastRgroupReply" />
+	</resultMap>
+	
+	<select id="selectFeedListCount" resultType="_int">
+		SELECT 
+		       COUNT(*) 
+		  FROM 
+		       FEED_BOARD 
+		 WHERE
+		       STATUS = 'Y'
+	</select>
+	
+	<select id="selectSearchListCount" parameterType="hashmap" resultType="_int">
+		SELECT 
+		       COUNT(*) 
+		  FROM 
+		       FEED_BOARD 
+		 WHERE
+		       STATUS = 'Y'
+		 <if test='boardType != "A"'>
+		   AND 
+		       BOARD_TYPE = #{boardType} 
+		 </if>
+		 <if test='!regionNoList.contains(0)'>
+		   AND 
+		       REGION_NO IN
+		       <foreach collection="regionNoList" item="regionNo" open="(" close=")" separator=",">
+		       #{regionNo}
+		       </foreach>
+		 </if>
+		   AND
+		       BOARD_CONTENT
+		  LIKE 
+		       '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="selectFeedList" resultMap="feedBoardResultSet">
+		SELECT
+		       BOARD_NO,
+		       BOARD_WRITER,
+		       REGION_NO,
+		       BOARD_TYPE,
+		       BOARD_TITLE,
+		       BOARD_CONTENT,
+		       BOARD_DATE,
+		       MEET_PLACE,
+		       TO_CHAR(MEET_DATE, 'YYYY-MM-DD HH24:MI') AS MEET_DATE,
+		       MEET_TOTAL,
+		       MEET_GENDER,
+		       MEET_AGE,
+		       REGION_NAME,
+		       NICKNAME,
+		       PROFILE_IMG,
+               NVL(COUNT_REPLY, 0) AS COUNT_REPLY,
+               COUNT_MEMBER,
+               LIKE_CHECK
+		  FROM 
+		       FEED_BOARD F
+		  JOIN 
+		       REGION_CATEGORY USING (REGION_NO)
+		  JOIN 
+		       MEMBER ON (BOARD_WRITER = USER_ID)
+     LEFT JOIN 
+               (SELECT 
+                       COUNT(*) AS COUNT_REPLY,
+                       BOARD_NO 
+                  FROM 
+                       FEED_REPLY 
+                 GROUP
+                    BY BOARD_NO, STATUS
+                HAVING
+                       STATUS = 'Y') USING (BOARD_NO)
+     LEFT JOIN
+               CHAT_ROOM USING(BOARD_NO)
+     LEFT JOIN
+               (SELECT 
+                       COUNT(*) AS COUNT_MEMBER,
+                       ROOM_NO
+                  FROM 
+                       CHAT_MEMBER
+                 GROUP
+                    BY ROOM_NO) USING (ROOM_NO)
+     LEFT JOIN
+               (SELECT 
+                       BOARD_NO,
+                       'Y' AS LIKE_CHECK
+                  FROM 
+                       FEED_LIKES
+                 WHERE
+                       USER_ID = #{userId}) USING (BOARD_NO)
+		 WHERE
+		       F.STATUS = 'Y'
+		 <if test='boardType != "" and boardType != "A"'>
+		   AND 
+		       BOARD_TYPE = #{boardType} 
+		 </if>
+		 <if test='!regionNoList.isEmpty() and !regionNoList.contains(0)'>
+		   AND 
+		       REGION_NO IN
+		       <foreach collection="regionNoList" item="regionNo" open="(" close=")" separator=",">
+		       #{regionNo}
+		       </foreach>
+		 </if>
+		   AND
+		       BOARD_CONTENT
+		  LIKE 
+		       '%' || #{keyword} || '%'
+		 ORDER
+		    BY BOARD_NO DESC
+	</select>
+	
+	<select id="selectFeedAttachmentList" parameterType="hashmap" resultMap="attachmentResultSet">
+		SELECT 
+		       FILE_NO,
+		       BOARD_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME
+		  FROM 
+		       FEED_ATTACHMENT
+		 WHERE
+		       BOARD_NO BETWEEN #{min} AND #{max}
+		 ORDER
+		    BY BOARD_NO DESC, FILE_NO ASC
+    </select>
+	
+	<select id="selectRegionList" resultMap="regionCategoryResultSet">
+		SELECT 
+			   REGION_NO,
+			   REGION_NAME
+		  FROM 
+		       REGION_CATEGORY
+		 WHERE
+		       REGION_NAME != '전체지역'
+	</select>
+	
+	<insert id="insertGeneralBoard" parameterType="feedBoard">
+		INSERT
+		  INTO
+		       FEED_BOARD
+		       (
+		       BOARD_NO,
+		       BOARD_WRITER,
+		       REGION_NO,
+		       BOARD_TYPE,
+		       BOARD_TITLE,
+		       BOARD_CONTENT
+		       )
+		VALUES
+		       (
+		       SEQ_FBNO.NEXTVAL,
+		       #{boardWriter},
+		       #{regionNo},
+		       #{boardType},
+		       #{boardTitle},
+		       #{boardContent}
+		       )
+	</insert>
+	
+	<insert id="insertAttachment" parameterType="attachment">
+		INSERT 
+		  INTO 
+		       FEED_ATTACHMENT
+		       (
+		       FILE_NO,
+		       BOARD_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME
+		       )
+		VALUES 
+		       (
+		       SEQ_FANO.NEXTVAL,
+		       SEQ_FBNO.CURRVAL,
+		       #{originName},
+		       #{changeName}
+		       )
+	</insert>
+	
+	<insert id="insertMeetBoard">
+		INSERT
+		  INTO
+		       FEED_BOARD
+		       (
+		       BOARD_NO,
+		       BOARD_WRITER,
+		       REGION_NO,
+		       BOARD_TYPE,
+		       BOARD_TITLE,
+		       BOARD_CONTENT,
+		       MEET_PLACE,
+		       LONGITUDE,
+		       LATITUDE,
+		       MEET_DATE,
+		       MEET_TOTAL,
+		       MEET_GENDER,
+		       MEET_AGE
+		       )
+		VALUES
+		       (
+		       SEQ_FBNO.NEXTVAL,
+		       #{boardWriter},
+		       #{regionNo},
+		       #{boardType},
+		       #{boardTitle},
+		       #{boardContent},
+		       #{meetPlace},
+		       #{longitude},
+		       #{latitude},
+		       #{meetDate},
+		       #{meetTotal},
+		       #{meetGender},
+		       #{meetAge}
+		       )
+	</insert>
+	
+	<insert id="insertChatRoom" parameterType="String">
+		INSERT 
+		  INTO 
+		       CHAT_ROOM
+		       (
+		       ROOM_NO,
+		       BOARD_NO,
+		       ROOM_NAME
+		       )
+		VALUES 
+		       (
+		       SEQ_CRNO.NEXTVAL,
+		       SEQ_FBNO.CURRVAL,
+		       #{boardTitle}
+		       )
+	</insert>
+	
+	<insert id="insertChatAdmin" parameterType="String">
+		INSERT 
+		  INTO 
+		       CHAT_MEMBER
+		       (
+		       ROOM_NO,
+		       USER_ID,
+		       USER_RANK
+		       )
+		VALUES 
+		       (
+		       SEQ_CRNO.CURRVAL,
+		       #{reviewWriter},
+		       'A'
+		       )
+	</insert>
+	
+	<update id="increaseCount" parameterType="_int">
+		UPDATE 
+		       FEED_BOARD
+		   SET 
+		       COUNT = COUNT + 1
+		 WHERE 
+		       BOARD_NO = #{boardNo}
+		   AND 
+		       STATUS = 'Y'
+	</update>
+
+	<select id="selectBoardType" parameterType="_int" resultType="String">
+		SELECT 
+		       BOARD_TYPE 
+		  FROM
+		       FEED_BOARD 
+		 WHERE 
+		       BOARD_NO = #{boardNo}
+		   AND
+		       STATUS = 'Y'
+	</select>
+	
+	<select id="selectGeneralBoard" parameterType="_int" resultMap="feedBoardResultSet">
+		SELECT 
+		       BOARD_NO,
+		       BOARD_WRITER,
+		       REGION_NO,
+		       BOARD_TYPE,
+		       BOARD_TITLE,
+		       BOARD_CONTENT,
+		       TO_CHAR(BOARD_DATE, 'YYYY-MM-DD HH24:MI') AS BOARD_DATE,
+		       REGION_NAME,
+		       NICKNAME,
+		       PROFILE_IMG,
+		       NVL(COUNT_LIKE, 0) AS COUNT_LIKE
+		  FROM
+		       FEED_BOARD F
+		  JOIN 
+		       REGION_CATEGORY USING (REGION_NO)
+		  JOIN 
+		       MEMBER ON (BOARD_WRITER = USER_ID)
+	 LEFT JOIN
+               (SELECT
+                       COUNT(*) COUNT_LIKE,
+                       BOARD_NO
+                  FROM
+                       FEED_LIKES
+                 GROUP 
+                    BY BOARD_NO
+                HAVING
+                       BOARD_NO = #{boardNo}) USING (BOARD_NO) 
+		 WHERE 
+		       BOARD_NO = #{boardNo}
+		   AND 
+		       F.STATUS = 'Y'
+	</select>
+	
+	<select id="selectAttachmentList" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT 
+		       FILE_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME 
+		  FROM 
+		       FEED_ATTACHMENT
+	     WHERE
+	           BOARD_NO = #{boardNo}
+	     ORDER
+	        BY FILE_NO
+	</select>
+	
+	<select id="selectMeetBoard" parameterType="_int" resultMap="feedBoardResultSet">
+		SELECT 
+		       BOARD_NO,
+		       BOARD_WRITER,
+		       REGION_NO,
+		       BOARD_TYPE,
+		       BOARD_TITLE,
+		       BOARD_CONTENT,
+		       TO_CHAR(BOARD_DATE, 'YYYY-MM-DD HH24:MI') AS BOARD_DATE,
+		       MEET_PLACE,
+		       LONGITUDE,
+		       LATITUDE,
+		       TO_CHAR(MEET_DATE, 'YYYY-MM-DD HH24:MI') AS MEET_DATE,
+		       MEET_TOTAL,
+		       MEET_GENDER,
+		       MEET_AGE,
+		       REGION_NAME,
+		       NICKNAME,
+		       PROFILE_IMG,
+		       COUNT_MEMBER,
+		       NVL(COUNT_LIKE, 0) AS COUNT_LIKE,
+		       ROOM_NO
+		  FROM
+		       FEED_BOARD F
+		  JOIN 
+		       REGION_CATEGORY USING (REGION_NO)
+		  JOIN 
+		       MEMBER ON (BOARD_WRITER = USER_ID)
+     LEFT JOIN
+               CHAT_ROOM USING(BOARD_NO)
+     LEFT JOIN
+               (SELECT 
+                       COUNT(*) AS COUNT_MEMBER,
+                       ROOM_NO
+                  FROM 
+                       CHAT_MEMBER
+                 GROUP
+                    BY ROOM_NO) USING (ROOM_NO)
+     LEFT JOIN
+               (SELECT
+                       COUNT(*) COUNT_LIKE,
+                       BOARD_NO
+                  FROM
+                       FEED_LIKES
+                 GROUP 
+                    BY BOARD_NO
+                HAVING
+                       BOARD_NO = #{boardNo}) USING (BOARD_NO)                       
+		 WHERE 
+		       BOARD_NO = #{boardNo}
+		   AND 
+		       F.STATUS = 'Y'
+	</select>
+	
+	<select id="checkChatMember" parameterType="chatMember" resultType="_int">
+		SELECT
+		       COUNT(*) 
+		  FROM
+		       CHAT_MEMBER 
+		 WHERE
+		       ROOM_NO = #{roomNo}
+		   AND
+		       USER_ID = #{userId}
+	</select>
+	
+	<select id="selectMeetTotal" parameterType="_int" resultType="_int">
+		SELECT 
+		       MEET_TOTAL
+		  FROM 
+		       FEED_BOARD
+		 WHERE
+		       BOARD_NO = #{boardNo}
+	</select>
+	
+	<select id="selectCountMember" parameterType="_int" resultType="_int">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       CHAT_MEMBER
+		 GROUP 
+		    BY ROOM_NO
+		HAVING
+		       ROOM_NO = #{roomNo}
+	</select>
+	
+	<insert id="insertChatMember" parameterType="chatMember">
+		INSERT 
+		  INTO 
+		       CHAT_MEMBER
+		       (
+		       ROOM_NO,
+		       USER_ID
+		       )
+		VALUES 
+		       (
+		       #{roomNo},
+		       #{userId}
+		       )
+	</insert>
+	
+	<select id="countOriginFile" parameterType="_int" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       FEED_ATTACHMENT
+		 WHERE
+		       BOARD_NO = #{boardNo}
+	</select>
+	
+	<update id="updateGeneralBoard" parameterType="feedBoard">
+		UPDATE
+		       FEED_BOARD
+		   SET
+		       REGION_NO = #{regionNo},
+		       BOARD_TITLE = #{boardTitle},
+		       BOARD_CONTENT = #{boardContent}
+		 WHERE
+		       BOARD_NO = #{boardNo}
+	</update>
+	
+	<delete id="deleteAttachment" parameterType="_int">
+		DELETE
+		  FROM
+		       FEED_ATTACHMENT
+		 WHERE
+		       FILE_NO = #{fileNo}
+	</delete>
+	
+	<update id="updateAttachment" parameterType="attachment">
+		UPDATE
+		       FEED_ATTACHMENT
+		   SET
+		       ORIGIN_NAME = #{originName},
+		       CHANGE_NAME = #{changeName}
+		 WHERE
+		       FILE_NO = #{fileNo}
+	</update>
+	
+	<insert id="insertNewAttachment" parameterType="attachment">
+		INSERT 
+		  INTO 
+		       FEED_ATTACHMENT
+		       (
+		       FILE_NO,
+		       BOARD_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME
+		       )
+		VALUES 
+		       (
+		       SEQ_FANO.NEXTVAL,
+		       #{boardNo},
+		       #{originName},
+		       #{changeName}
+		       )
+	</insert>
+
+	<update id="updateMeetBoard" parameterType="feedBoard">
+		UPDATE 
+		       FEED_BOARD
+		   SET 
+		       REGION_NO = #{regionNo},
+		       BOARD_TITLE = #{boardTitle},
+		       BOARD_CONTENT = #{boardContent},
+		       MEET_PLACE = #{meetPlace},
+		       LONGITUDE = #{longitude},
+		       LATITUDE = #{latitude},
+		       MEET_DATE = #{meetDate},
+		       MEET_TOTAL = #{meetTotal},
+		       MEET_GENDER = #{meetGender},
+		       MEET_AGE = #{meetAge}
+		 WHERE 
+		       BOARD_NO = #{boardNo}
+	</update>
+	
+	<update id="deleteBoard" parameterType="_int">
+		UPDATE 
+		       FEED_BOARD
+		   SET 
+		       STATUS = 'N'
+		 WHERE 
+		       BOARD_NO = #{boardNo}
+	</update>
+	
+	<delete id="deleteAllAttachment" parameterType="_int">
+		DELETE
+		  FROM
+		       FEED_ATTACHMENT
+		 WHERE
+		       BOARD_NO = #{boardNo}
+	</delete>
+	
+	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">
+		SELECT
+		       REPLY_NO,
+		       REPLY_WRITER,
+		       REPLY_CONTENT,
+		       R.RGROUP,
+		       RDEPTH,
+		       TO_CHAR(REPLY_DATE, 'YYYY-MM-DD HH24:MI') AS REPLY_DATE,
+		       NICKNAME,
+		       PROFILE_IMG,
+		       IS_LAST_RGROUP_REPLY
+		  FROM
+		       FEED_REPLY R
+		  JOIN
+		       MEMBER ON (REPLY_WRITER = USER_ID)
+	 LEFT JOIN
+		       (SELECT 
+		               MAX(REPLY_NO) AS LAST_REPLY_NO,
+		               'Y' AS IS_LAST_RGROUP_REPLY
+		          FROM 
+		               FEED_REPLY
+		         GROUP 
+		            BY RGROUP, STATUS
+		        HAVING 
+		               STATUS='Y') ON (LAST_REPLY_NO = REPLY_NO)
+		 WHERE
+		       BOARD_NO = #{boardNo}
+		   AND
+		       R.STATUS = 'Y'
+		 ORDER 
+            BY RGROUP, RDEPTH, REPLY_NO
+	</select>
+	
+	<insert id="insertReply" parameterType="reply">
+		INSERT
+		  INTO 
+		       FEED_REPLY
+		       (
+		       REPLY_NO,
+		       BOARD_NO,
+		       REPLY_WRITER,
+		       REPLY_CONTENT,
+		       RGROUP
+		       )
+		VALUES
+		       (
+		       SEQ_FRNO.NEXTVAL,
+		       #{boardNo},
+		       #{replyWriter},
+		       #{replyContent},
+		       SEQ_FRNO.CURRVAL
+		       )
+	</insert>
+	
+	<insert id="insertReReply" parameterType="reply">
+		INSERT
+		  INTO 
+		       FEED_REPLY
+		       (
+		       REPLY_NO,
+		       BOARD_NO,
+		       REPLY_WRITER,
+		       REPLY_CONTENT,
+		       RGROUP,
+		       RDEPTH
+		       )
+		VALUES
+		       (
+		       SEQ_FRNO.NEXTVAL,
+		       #{boardNo},
+		       #{replyWriter},
+		       #{replyContent},
+		       #{rgroup},
+		       1
+		       )
+	</insert>
+	
+	<update id="updateReply" parameterType="reply">
+		UPDATE
+		       FEED_REPLY
+		   SET
+		       REPLY_CONTENT = #{replyContent}
+		 WHERE
+		       REPLY_NO = #{replyNo}
+	</update>
+	
+	<update id="deleteReply" parameterType="_int">
+		UPDATE 
+		       FEED_REPLY 
+		   SET 
+		       STATUS = 'N' 
+		 WHERE 
+		       REPLY_NO = #{replyNo}
+	</update>
+	
+	<select id="countRereply" parameterType="_int" resultType="_int">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       FEED_REPLY
+		 WHERE 
+		       RGROUP = #{replyNo} 
+		   AND 
+		       RDEPTH = 1
+		   AND 
+		       STATUS = 'Y'
+	</select>
+	
+	<update id="deleteReplyContent" parameterType="_int">
+		UPDATE 
+		       FEED_REPLY 
+		   SET 
+		       REPLY_CONTENT = NULL 
+		 WHERE 
+		       REPLY_NO = #{replyNo}
+	</update>
+	
+	<select id="countReplyNrereply" parameterType="_int" resultType="_int">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       FEED_REPLY
+		 WHERE 
+		       RGROUP = #{rgroup} 
+		   AND 
+		       STATUS = 'Y'
+	</select>
+	
+	<select id="checkDeletedReply" parameterType="_int" resultType="_int">
+		SELECT
+               COUNT(*)
+          FROM 
+               FEED_REPLY
+         WHERE
+               RGROUP = #{rgroup} 
+           AND
+               RDEPTH = 0
+           AND 
+               REPLY_CONTENT IS NULL
+           AND 
+               STATUS = 'Y'
+	</select>
+	
+	<update id="deleteTwoReply" parameterType="_int">
+		UPDATE 
+		       FEED_REPLY 
+		   SET 
+		       STATUS = 'N' 
+		 WHERE 
+		       RGROUP = #{rgroup}
+	</update>
+	
+	<select id="countReply" parameterType="_int" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       FEED_REPLY
+		 WHERE 
+		       BOARD_NO = #{boardNo}
+		   AND
+		       STATUS = 'Y'
+	</select>
+	
+	<insert id="insertLike" parameterType="likes">
+		INSERT 
+		  INTO
+		       FEED_LIKES
+		       (
+		       USER_ID,
+		       BOARD_NO
+		       )
+		VALUES
+		       (
+		       #{userId},
+		       #{boardNo}
+		       )
+	</insert>
+	
+	<delete id="deleteLike" parameterType="likes">
+		DELETE 
+		  FROM
+		       FEED_LIKES
+		 WHERE
+		       USER_ID = #{userId}
+		   AND
+		       BOARD_NO = #{boardNo}
+	</delete>
+	
+	<select id="checkLike" parameterType="likes" resultType="_int">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       FEED_LIKES 
+		 WHERE 
+		       USER_ID = #{userId}
+		   AND
+		       BOARD_NO = #{boardNo}	       
+	</select>
+	
+	<select id="countLike" parameterType="_int" resultType="_int">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       FEED_LIKES 
+		 WHERE 
+		       BOARD_NO = #{boardNo}	       
+	</select>
+
+</mapper>

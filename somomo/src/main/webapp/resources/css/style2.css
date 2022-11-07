@@ -1,0 +1,597 @@
+body{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-section{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 0 10%;
+}
+
+
+.main-middle{
+  width: 50%;
+
+}
+
+/* ====================== 글쓰기 Modal =================== */
+
+.main-middle .popup-outer{
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.3);
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
+  transform: scale(1.2);
+  transition: opacity 0.2s 0s ease-in-out,  
+              transform 0.2s 0s ease-in-out;
+}
+
+#writePopup,
+#updatePopup {
+  opacity: 0;
+}
+#writePopup.active,
+#updatePopup.active{
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.main-middle.active .popup-outer{
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+.main-middle .popup-box{
+  position: relative;
+  background: var(--white-color);
+  border-radius: 12px;
+  width: 35%;
+  height: 67%;
+}
+.popup-box .close{
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 24px;
+  color: #b4b4b4;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.popup-box .close:hover{
+  color: #333;
+}
+
+#editor {
+  padding: 16px 24px;
+  min-height: 350px;
+  border: 1px solid #D6D6D6;
+  border-radius: 4px;
+}
+
+#updateEditor {
+  padding: 16px 24px;
+  min-height: 350px;
+  border: 1px solid #D6D6D6;
+  border-radius: 4px;
+}
+
+.write-form-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  height: 59px;
+}
+
+.write-form-header .write-form-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+}
+
+.popup-box .textarea{
+  padding: 10px;
+}
+
+.popup-box textarea{
+  min-height: 140px;
+  width: 100%;
+  resize: none;
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 10px 10px 10px 14px;
+  font-weight: 400;
+  background: var(--white-color);
+}
+
+
+.toolbarList input {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    cursor: pointer;
+    opacity: 0!important;
+}
+
+.editor-placeholder {
+  font-size: 13px;
+  color: var(--black-light-color);
+}
+
+.toolbarList {
+  display: flex;
+}
+
+
+.toolbarList li {
+  padding: 10px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.popup-box .button{
+  display: flex;
+  justify-content: flex-end;
+}
+.popup-box .button button{
+  margin-top: 20px;
+  outline: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 400;
+  min-width: 90px;
+  height: 34px;
+  margin-left: 2px;
+  border-radius: 6px;
+  line-height: 34px;
+  background: #474e60;
+  color: #DDD;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+#img-selector {
+  display: none;
+}
+
+#editor img {
+  width: 100%;
+  height: 400px;
+}
+
+/* 사진 추가 */
+.grid {
+  margin:10px 34px;
+  display:flex;
+  gap:20px;
+}
+.grid .form-element {
+  width:101px;
+  height:101px;
+  border : 1px solid lightgray;
+ 
+}
+.grid .form-element input {
+  display : none;
+}
+
+.grid .form-element label {
+	height: 100%;
+	width : 100%;
+}
+.grid .form-element img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  cursor : pointer;
+}
+.grid .form-element div {
+  position:relative;
+  height:40px;
+  margin-top:-40px;
+  background:rgba(0,0,0,0.5);
+  text-align:center;
+  line-height:40px;
+  font-size:13px;
+  color:#f5f5f5;
+  font-weight:600;
+}
+
+.form-element:hover {
+	opacity : 0.7;
+	
+}
+
+
+.delete-image {		
+    display: flex;
+    text-align: center;
+    gap: 20px;
+  
+}
+.imageRemoveBtn{
+	display:none;
+	width: 100%;
+    margin: 10px 0;
+    text-align: center;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition : 0.5s
+}
+.imageRemoveBtn.on{
+	display : block;	
+}
+
+.imageRemoveBtn.on i {
+	color : red;
+}
+
+.form-wrap {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ======================= 메인컨텐츠 중앙 CSS =================== */
+
+.main-middle{
+  height: 100%;
+  background: var(--white-color);
+  padding: 20px;
+}
+
+.main-middle .write-form {
+  width: 100%;
+  background: var(--white-color);
+  border-radius: 6px;
+  padding: 20px;
+  columns:#626262;
+  box-shadow: 4px 4px 40px rgba(0, 0, 0, .1);
+}
+
+/* ================ 관리가 첫 방 만들 때 CSS ================= */
+
+.empty-content{
+  width: 101%;
+  height: 100%;
+  background: var(--white-color);
+}
+
+
+.group-board{
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  margin-top: 20px;
+}
+
+.group-board i {
+position : absolute;
+font-size: 40px;
+left: 10px;
+top: 3px;
+}
+
+.board-text {
+  margin-top: 30px;
+  text-align: center;
+}
+.board-text h3 {
+  margin-bottom: 5px;
+}
+
+/* ================== 게시글 CSS ================= */
+
+.feed-outer{
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 10px rgb(0 0 0 / 20%);
+}
+
+.feed-top{
+  display: flex;
+  justify-content: space-between;
+}
+
+.feed-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.feed-profile img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+
+
+.postCount {
+overflow: hidden;
+padding: 15px 0 10px;
+margin-top: 17px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.likeCountBtn img{
+width: 15px;
+height: 15px;
+}
+
+.likeCountBtn {
+margin-right: 10px;
+}
+
+.commentCountBtn, .likeCountBtn {
+font-size: 14px;
+}
+
+.postCountLeft{
+  display: flex;
+  align-items: center;
+}
+
+.postCountRight span{
+  display: flex;
+  align-items: center;
+}
+
+.postCountRight {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+
+.feed-profile .form-icon i {
+position: relative;
+font-size: 22px;
+cursor: pointer;
+}
+
+.commentBox .commentWrap {
+  position: relative;
+}
+
+.commentWrap .writeInfo {
+display: flex;
+text-align: left;
+overflow: hidden;
+font-size: 13px;
+white-space: normal;
+max-width: 90%;
+padding-right: 3px;
+font-weight: 600;
+color: #333;
+height: 50px;
+}
+
+.replyWrap{
+  border-top: 1px solid var(--border-color);
+  margin-top: 10px;
+  padding: 14px 10px 0 0;
+}
+
+.reply-input-area{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reply-input-area textarea{
+  padding: 10px;
+  width: 78%;
+  height: 40px;
+  font-size: 13px;
+  border-radius: 20px;
+  border: none;
+  outline: 1px solid var(--border-color);
+  vertical-align: middle;
+  resize: none;
+}
+
+.reply-input-area textarea:focus{
+	border: 1px solid #FEC8C6;
+}
+
+.replyBtn{
+  height: 40px;
+  width: 10%;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(250,188,186);
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.replyBtn:hover{
+  cursor: pointer;
+}
+
+.reply-replyBtn {
+margin-left: 10px;
+}
+
+.upProfile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+/* 댓글 관련 */
+.upProfileImg img{
+  width: 35px;
+  height: 35px;
+}
+
+.writeInfo-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.twiceComment{
+  display: flex;
+  flex-direction: row;
+}
+
+.twiceComment .rBtn{
+  margin: 0 10px 0 15px;
+}
+
+.twiceComment button{
+  border: none;
+  background-color: transparent;
+  color: var(--black-light-color);
+}
+
+.rrArea{
+  margin-top: 10px;
+}
+/* ================= 피드 DropDown ================ */
+
+.feed {
+position: relative;
+cursor: pointer;
+}
+
+.feed .feed-link{
+position: absolute;
+right: 0;
+background-color: var(--white-color);
+padding: 10px 0;
+box-shadow: 4px 4px 16px rgba(0, 0, 0, .1);
+border-radius: 10px;
+width: 130px;
+opacity: 0;
+pointer-events: none;
+}
+
+.feed .feed-link.show{
+opacity: 1;
+pointer-events: visible;
+top: 100%;
+transition: var( --tran-03);
+}
+
+.feed .feed-link li{
+font-style:normal;
+}
+
+.feed .feed-link a{
+padding: 10px 16px;
+display: flex;
+grid-gap: 10px;
+font-size: 14px;
+color: var(--text-color);
+align-items: center;
+transition: var( --tran-03);
+}
+
+.feed .feed-link a:hover{
+background-color: var(--grey-color);
+}
+
+
+/* =================== 그룹 셋팅 CSS  ================= */
+
+.setting {
+  background: var(--white-color);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Android Emoji";
+}
+.setting-title {
+    position: relative;
+    display: flex;
+    height: 61px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    border-bottom: 1px solid #f0f2f4;
+}
+
+.setting-title .setting-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  min-height: 55px;
+  padding: 10px 0;
+  border-top: 1px solid #f0f2f4;
+  text-align: left;
+  align-items: center;
+  justify-content: space-around;
+  
+}
+
+
+.setting-container .setting-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+}
+
+.setting-container .itemContent .label {
+  font-size: 14px;
+  font-weight: 400;
+  display: block;
+}
+
+.setting-container .itemContent .label-data {
+  font-size: 11px;
+}
+
+.itemSide {
+  position: relative;
+  min-width: 92px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.itemSide a {
+  border: solid 1px #e2e2e2;
+  background: #fafafa;
+  padding: 5px;
+}
+
+.delete a{
+  color: red;
+}
+
+/* =================== 부트스트랩 모달 CSS  ================= */
+
+
+
+
+

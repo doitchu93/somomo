@@ -1,0 +1,324 @@
+
+section{
+    display: flex;
+    height: 100vh;
+    background-color: #f7f8fc;
+}
+
+/* ----------------------- 왼쪽 사이드바-------------------- */
+nav{
+    position: fixed;
+    top: 66px;
+    overflow: auto;
+    min-width: 250px;
+    height: 100%;
+    border-right: 1px solid var(--border-color);
+    margin-left: 10%;
+    background-color: var(--white-color);
+}
+
+nav>div{
+    padding: 10px;
+}
+
+.nav-col h2{
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.nav-title{
+  font-size: 30px;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.nav-col-group{
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px 0;
+    color: var(--black-light-color);
+    width: 100%;
+    margin: 10px 0;
+}
+
+.group-under {
+  top: 10px;
+}
+
+/* ======================새 그룹 만들기 CSS====================== */
+.create-newGroup {
+  width: 100%;
+  margin-top: 30px;
+}
+
+
+.learn-more {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: 16px;
+}
+
+button.learn-more {
+  width: 200px;
+  height: auto;
+  position: relative;
+}
+button.learn-more .circle {
+  transition: all 0.45s ;
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 40px;
+  height: 40px;
+  background-color: var(--theme-color);
+  border-radius: 24px;
+}
+
+.learn-more i {
+  position : absolute;
+  font-size: 25px;
+  z-index: 10;
+  top: 2px;
+  left: 7px;
+  transition: 0.8s;
+}
+
+.learn-more:hover i {
+  position : absolute;
+  font-size: 25px;
+  top: 2px;
+  left: 7px;
+  z-index: 10;
+  transform: rotate(-90deg);
+  transition: 0.8s;
+  color: #fff;
+}
+
+button.learn-more .button-text {
+  transition: all 0.45s ;
+  position: absolute;
+  top: -3px;
+  left: 10px;
+  right: 0;
+  bottom: 0;
+  padding: 10px 0;
+  margin: 0 0 0 1;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+}
+
+button:hover .circle {
+  width: 100%;
+}
+button:hover .button-text {
+  color: #fff;
+}
+
+.horizontal{
+    margin: 10px 0;
+    background-color: var(--border-color);
+    height: 1px;
+}
+
+.nav-col img{
+    padding: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+.nav-col div{
+    display: flex;
+    align-items: center;
+}
+
+.nav-col-group {
+    position: relative;
+    padding: 3px;
+}
+
+.nav-col div span{
+    margin-left: 10px;
+    color: black;
+    font-weight: 550;
+}
+
+.nav-col-group:hover{
+  background-color: rgb(255, 240, 239); 
+  transition: var(--tran-02);
+  cursor: pointer;
+}
+
+.nav-group-list{
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  margin: 5px 0;
+  color: var(--black-light-color);
+}
+
+.nav-group-list:hover{
+  background-color: rgb(255, 240, 239); 
+  transition: var(--tran-02);
+  cursor: pointer;
+}
+
+.adminGroup {
+  max-height: 160px;
+  width: 240px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column; 
+}
+
+.memberGroup {
+  max-height: 160px;
+  width: 240px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------------------------- */
+.content{
+    display: flex;
+    margin-top: 60px;
+    margin-right: 10%;
+    margin-left: 26%;
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+}
+
+.list-outer {
+    display: flex;
+    flex-direction: column;
+  }
+
+.group-outer{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.tag-group{
+  margin-left: 5px;
+  width: 100%;
+  height: 40px;
+}
+
+.tag-body {
+    width: 100%;
+    display: flex;
+    height: 40px;
+    align-items: center;
+}
+
+.tag-group .tag-body li {
+  display: flex;
+  width: 90px;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 8px 1px;
+  font-size: 14px;
+  border : 2px solid rgb(228, 226, 226);
+  margin: 5px;
+  cursor: pointer;
+}
+
+.tag-group .tag-body li:hover{
+    background-color: var(--toggle-color);
+    transition: var(--tran-02);
+  }
+
+  .group {
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    width: 280px;
+    height: 350px;
+    cursor: pointer;
+  }
+  .group-header img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .group-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 20px 0px 20px;
+  }
+
+  .tag {
+    background: #cccccc;
+    border-radius: 50px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #fff;
+    padding: 2px 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .tag-development {
+    background-color: #47bcd4;
+  }
+  .tag-trip {
+    background-color: #5e76bf;
+  }
+  .tag-exercise {
+    background-color: #cd5b9f;
+  }
+
+  .group-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 26px;
+    padding: 0 ;
+    font-size: 13px;
+}
+
+.group-member::after {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #a8a5a5;
+}
+
+.group-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.group-btn button{
+    width: 100%;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.group-btn button:hover{
+    background-color: var(--toggle-color);
+    transition: var(--tran-02);
+}

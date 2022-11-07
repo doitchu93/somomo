@@ -1,0 +1,1092 @@
+/* ===== 구글 폰트 ===== */
+/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');*/
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard-dynamic-subset.css");
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*font-family: "Nunito",sans-serif;*/
+    font-family: Pretendard;
+}
+
+:root{
+     /*====== 색상 미리 설정 ========  */
+     /*====== 색상 추가하고 싶으면 여기에 추가하고 쓰자 ======= */
+
+    --blue-color: #0E4BF1;
+    --white-color: #FFF;
+    --text-color: #000;
+    --black-light-color: #707070;
+    --grey-color : #dfdfdf;
+    --border-color: #e6e5e5;
+    --toggle-color: #DDD;
+    --title-icon-color: #fff;
+    --community-text-color: #030303;
+    
+    /* ====== 트랜지션 ====== */
+    --tran-07: all 0.7s ease;
+    --tran-05: all 0.5s ease;
+    --tran-03: all 0.3s ease;
+    --tran-02: all 0.2s ease;
+}
+
+body{
+    min-height: 100vh;
+    background-color: #f3f6fd;
+}
+
+ul{
+    list-style:none;
+    padding-left:0px;
+}
+
+a {
+    text-decoration: none;
+}
+   
+
+
+/* ======================= 왼쪽 사이드 바 CSS ==================== */
+nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background-color: var(--white-color);
+    border-right: 1px solid var(--border-color);
+    transition: var(--tran-05);
+    margin-left: 10%;
+}
+
+/* 자바스크립트에서 close 클래스 추가해 주므로 close 추가적용했을 때 CSS 꾸미기*/
+
+nav.close{
+    width: 73px;
+}
+nav .logo-name{
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+nav .logo-image{
+    display: flex;
+    justify-content: center;
+    min-width: 45px;
+}
+nav .logo-image img{
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+nav .logo-name .logo_name{
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-left: 14px;
+    transition: var(--tran-05);
+}
+nav.close .logo_name{
+    opacity: 0;
+    pointer-events: none;
+}
+
+nav .menu-items{
+    margin-top: 40px;
+    height: calc(100% - 90px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.menu-items li{
+    list-style: none;
+}
+.menu-items li a{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    text-decoration: none;
+    position: relative;
+}
+
+.menu-items .community {
+    /*border-top: 1px solid var(--border-color);*/
+}
+
+.menu-items li a i{
+	padding-bottom: 4px;
+    font-size: 24px;
+    min-width: 45px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black-light-color);
+}
+.menu-items li a .link-name{
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--black-light-color);    
+    transition: var(--tran-05);
+}
+nav.close li a .link-name{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.menu-items li img {
+    margin-left: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black-light-color);
+}
+
+.loginProfile {
+	margin-top:350px;
+}
+
+.menu-items li a .login-profile{
+    position: fixed;
+    margin-left: 57px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--community-text-color);    
+    transition: var(--tran-05);
+    /*font-family: "Roboto","Arial",sans-serif;*/
+   
+}
+
+
+
+/* ====== 왼쪽 사이드 바 아이콘 HOVER ====== */
+
+
+.nav-links li a:hover i,
+.nav-links li a:hover .link-name{
+    color: var(--blue-color);
+}
+
+
+.menu-items .logout-mode{
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ================================ 왼쪽 사이드 바 끝 ===================== */
+
+
+/* ================================ 메인 컨텐츠 =========================== */
+
+.main-content{
+    margin: 0 10%;
+    position: relative;
+    left: 250px;
+    background-color: var(--white-color);
+    min-height: 100vh;
+    padding: 10px 14px;
+    width: 55%;
+    transition: var(--tran-05);
+}
+nav.close ~ .main-content{
+    left: 73px;
+    width: 70%;
+}
+
+/* ==================== 상단 바 =================== */
+
+
+.main-content .top{
+    margin-left: 11%;
+    position: fixed;
+    top: 0;
+    left: 250px;
+    display: flex;
+    width: 42%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background-color: var(--white-color);
+    transition: var(--tran-05);
+    z-index: 10;
+}
+
+nav.close ~ .main-content .top{
+    left: 73px;
+    width: 53%;
+    margin-right: 0;
+}
+
+.main-content .top .sidebar-toggle{
+    font-size: 26px;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.top .user-icon {
+    font-size: 26px;
+    color: var(--text-color);
+    cursor: pointer;
+
+}
+.main-content .top .search-box{
+    position: relative;
+    height: 45px;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 30px;
+    
+}
+.top .search-box input{
+    position: absolute;
+    border: 1px solid var(--border-color);
+    background-color: var(--white-color);
+    padding: 0 25px 0 50px;
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    color: var(--text-color);
+    font-size: 15px;
+    font-weight: 400;
+    outline: none;
+}
+.top .search-box i{
+    position: absolute;
+    left: 15px;
+    font-size: 22px;
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-55%);
+    color: var(--black-light-color);
+}
+
+
+.top img{
+    width: 40px;
+}
+
+/* ==================== 상단 바  끝=================== */
+
+
+
+
+
+
+
+
+
+
+/* ===================== 메인 피드 ==================*/
+.main-content .main-feed {
+    margin: 50px 5% 0 8%;
+    position: relative;
+    min-height: 100vh;
+    width: 65%;
+    padding-top: 30px;
+    transition: var(--tran-05);
+    z-index: 5;
+}
+
+nav.close ~ .main-content .main-feed{
+    width: 70%;
+    margin-left: 5%;
+}
+
+.write-post-contatiner{
+    width: 100%;
+    background: #fff;
+    border-radius: 6px;
+    padding: 20px;
+    columns:#626262;
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, .1);
+
+}
+
+.feed-profile {
+    display: flex;
+    align-items: center;
+
+}
+
+.feed-profile img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+
+
+
+/* ====================== 메인 글쓰기 버튼(일반글/모임모집) ====================== */
+.edit-navigation{
+    position: fixed;
+    display: flex;
+    top: 87%;
+    left: 69%;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .menuToggle{
+    position: relative;
+    width: 55px;
+    height: 55px;
+    color: pink;
+   	border : 4px solid pink;
+    /*background: rgb(255, 255, 255);*/
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .15);
+  }
+
+  .menuToggle i{
+    position: absolute;
+    font-size: 35px;
+  }
+
+
+  .menuToggle.active .menu{
+    position: absolute;
+    width: 120px;
+    height: 70px;
+    z-index: 1;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .3);
+    transform: translate(-50px,-80px);
+    transition: 0.3s;
+  }
+
+  .menu ul li {
+    cursor: pointer;
+    opacity : 0;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+  }
+  .menu ul li button{
+    color: black;
+    background: none;
+    border: none;
+    width: 100%;
+  }
+
+  .menu ul li button:hover{
+    background: pink;
+  }
+
+  .menu ul li button:focus{
+    background: #ffffff;
+    border: none;
+  }
+
+  .menuToggle.active .menu ul li {
+    opacity : 1;
+    visibility: visible;
+}
+
+
+
+/* ================= 피드 DropDown ================ */
+
+.feed {
+	font-size : 20px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .feed .feed-link{
+    position: absolute;
+    right: 0;
+    background-color: var(--white-color);
+    padding: 10px 0;
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, .1);
+    border-radius: 10px;
+    width: 130px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .feed .feed-link.show{
+    opacity: 1;
+    pointer-events: visible;
+    top: 100%;
+    transition: var( --tran-03);
+  }
+  
+  .feed .feed-link li{
+    font-style:normal;
+  }
+  
+  .feed .feed-link a{
+    padding: 10px 16px;
+    display: flex;
+    grid-gap: 10px;
+    font-size: 14px;
+    color: var(--text-color);
+    align-items: center;
+    transition: var( --tran-03);
+  }
+  
+  .feed .feed-link a:hover{
+    background-color: var(--grey-color);
+  }
+
+
+/* ================= 게시글 공통부분 ================ */
+/* 글 테두리*/
+.fd-board {
+	width: 100%;
+	background: #fff;
+	border-radius: 6px;
+	padding: 20px;
+	columns:#8d1b1b;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, .2);
+	margin-bottom : 10px;
+}
+
+/* 글 상단의 일반글/모임모집 + 지역명 부분*/
+.fd-board-top {
+	margin-bottom : 10px;
+}
+.fd-board-top > a {
+	padding: 2px;
+	text-decoration: none;
+	color: black;
+	font-weight:500;
+}
+
+.fd-board-nickname {
+    margin-left: 5px;
+}
+
+.fd-board-date {
+	font-size: 14px;
+}
+
+/* 일반글 태그 (General) */
+.btnBoardTypeG{
+	font-size: 12px;
+	border-radius: 20px;
+	border: 1px solid lightgray;
+	background-color: lightgray;
+	color: black;
+}
+/* 모임모집 태그 (Meet) */
+.btnBoardTypeM{
+    font-size: 12px;
+    border-radius: 20px;
+    border: 1px solid pink;
+    background-color: pink;
+    color: black;
+}
+
+/* 글 상단의 지역(경기도/서울/인천 등등)*/
+.btnRegionNo{
+	font-size: 12px;
+    border: 1px solid rgb(248, 248, 154);
+    border-radius: 20px;
+    background-color: rgb(248, 248, 154);
+    color: black;
+}
+
+/* 작성자 정보, 시간, 드롭다운버튼 */
+.fd-board-writer-date{width: 100%;}
+
+/* 작성자 프로필이미지*/
+.profileImg-area{
+	width: 50px;
+	height: 50px;
+}
+.profileImg{
+	border-radius: 50%;
+	width:100%;
+	height:50px;
+}
+
+/* 글 제목 */
+.title{font-weight:600;}
+
+/* 글 내용 부분 각 margin*/
+.fdm, .md{margin-top:10px;}
+
+/* 좋아요/찜 버튼 */
+.likeBtn{
+	width:30px;
+	height:30px;
+}
+
+/* 버튼 색 (다른 페이지와 통일 필요)*/
+.btnPink{
+	display:block;
+	width:100%;
+	margin-top: 10px;
+	padding: 10px;
+	background-color: rgb(250,188,186);
+	border: 1px solid rgb(250,188,186);
+	border-radius: 20px;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+}
+.btnPink:hover{
+	background-color: #FEC8C6;
+	border: 1px solid #FEC8C6;
+}
+
+.btnDisabled{
+	display:block;
+	width:100%;
+	margin-top: 10px;
+	padding: 10px;
+	background-color: rgb(190, 190, 190);
+	border: rgb(190, 190, 190);
+	border-radius: 20px;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+}
+/* ============= 게시글 공통부분 끝 =============*/
+
+
+
+/* ============= 모임모집글 관련  =============*/
+.gather{ color: orange;}
+.gather-close{ color: darkgray;}
+/*모임모집 모달창 왼쪽(카카오맵) 오른쪽(작성폼)*/
+.md-left{
+	width:48%;
+  	float:left;
+  	box-sizing:border-box;
+}
+.md-right{
+	width:48%;
+  	float:right;
+  	box-sizing:border-box;
+}
+/* ============= 모임모집글 관련 끝 =============*/
+
+
+
+/* ================= 일반글 관련 (사진, 댓글) ================ */
+.content > img {
+	width: 48%;
+	height: 200px;
+	border-radius: 10px;
+	margin: 2px 0;
+}
+
+.reply-input-area {
+	width: 100%;
+    height: 50px;
+    margin-top: 10px;
+}
+
+.reply-input-area > textarea {
+	padding : 10px;
+    width: 78%;
+    height: 40px;
+    font-size: 13px;
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+    outline: 1px solid var(--border-color);
+    vertical-align:middle;
+}
+
+.reply-input-area > textarea:focus {
+    outline: 1px solid rgb(250,188,186);
+}
+  
+/* 작성 버튼 */
+.reply-input-area > button {
+	height: 40px;
+    width: 15%;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(250,188,186);
+    margin-left: 10px;
+    vertical-align:middle;
+}
+    
+.reply-content-area .replyWrap {
+	position: relative;
+	min-height: 67px;
+	padding: 14px 10px 14px 48px;
+	border-top: 1px solid #f0f0f0;
+}
+
+.replyWrap .writeInfo {
+	display: flex;
+	text-align: left;
+	overflow: hidden;
+	max-height: 18.59px;
+	font-size: 15px;
+	white-space: normal;
+	max-width: 90%;
+	padding-right: 3px;
+	font-weight: 600;
+	color: #333;
+}
+
+.replyWrap  .writeInfo>.upProfile {
+	position: absolute;
+	left: 25px;
+	top: 15px;
+}
+
+.writeInfo-date{
+	margin-left:5px;
+	color:gray;
+	font-size:14px;
+}
+.upProfile {
+	margin-left: -27px;
+}
+
+.upProfile .upProfileImg img{
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+}
+
+.content-area {
+	font-size: 15px;
+	line-height: 1.4;
+	cursor: pointer;
+}
+
+ .reply-btn-area {
+	display: flex;
+	position: relative;
+	vertical-align: top;
+	margin-top: 3px;
+}
+
+
+.rBtn {
+	font-weight: bold;
+	color: gray;
+	font-size: 13px;
+	border: none;
+	background: none;
+	margin-right: 5px;
+}
+
+.reply-replyBtn {
+	margin-left: 10px;
+}
+
+#mUpReplyContent {
+	overflow: hidden;
+	resize: none;
+}
+
+
+
+
+
+/* 사진 추가 */
+	
+	
+.grid {
+  margin:10px 0;
+  display:flex;
+  gap:20px;
+}
+.grid .form-element {
+  width:101px;
+  height:101px;
+  border : 1px solid lightgray;
+ 
+}
+.grid .form-element input {
+  display : none;
+}
+
+.grid .form-element label {
+	height: 100%;
+	width : 100%;
+}
+.grid .form-element img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  cursor : pointer;
+}
+.grid .form-element div {
+  position:relative;
+  height:40px;
+  margin-top:-40px;
+  background:rgba(0,0,0,0.5);
+  text-align:center;
+  line-height:40px;
+  font-size:13px;
+  color:#f5f5f5;
+  font-weight:600;
+}
+
+.form-element:hover {
+	opacity : 0.7;
+	
+}
+
+
+   .delete-image {		
+    display: flex;
+    text-align: center;
+    gap: 20px;
+  
+}
+.imageRemoveBtn{
+	display:none;
+	width: 100%;
+    margin: 10px 0;
+    text-align: center;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition : 0.5s
+}
+.imageRemoveBtn.on{
+	display : block;	
+}
+
+.imageRemoveBtn.on i {
+	color : red;
+}
+
+.form-wrap {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+			
+	
+
+
+
+
+
+
+
+/* ============= 일반글 관련 끝 =============*/
+
+/* ===================== 메인 피드 끝 ==================*/
+
+
+
+
+
+
+/* ================오른쪽 사이드 바================= */
+
+.right-sidebar {
+    position: fixed;
+    top: 0;
+    right : 0;
+    height: 100%;
+    width: 400px;
+    padding: 10px 14px;
+    background-color: var(--white-color);
+    transition: var(--tran-05);
+    margin-right: 10%;
+}
+
+.right-top {
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 45px;
+    margin: 0 20%;
+}
+
+.right-sidebar .right-top i {
+    font-size: 30px;
+    min-width: 45px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.profile {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile .profile-link{
+    position: absolute;
+    right: 0;
+    background-color: var(--white-color);
+    padding: 10px 0;
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, .1);
+    border-radius: 10px;
+    width: 160px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.profile .profile-link.show{
+    opacity: 1;
+    pointer-events: visible;
+    top: 100%;
+    transition: var( --tran-03);
+    z-index: 100;
+}
+
+.profile .profile-link li{
+    font-style:normal;
+}
+
+.profile .profile-link a{
+    padding: 10px 16px;
+    display: flex;
+    grid-gap: 10px;
+    font-size: 14px;
+    color: var(--text-color);
+    align-items: center;
+    transition: var( --tran-03);
+}
+
+.profile .profile-link a:hover{
+    background-color: var(--grey-color);
+}
+
+/* 승희 여기서부터 보면 됨!! */
+
+.right-main{
+    display: flex;
+    position: relative;
+    top: 75px;
+    left: 0%;
+    margin-left: 10px;
+}
+
+.main-outer{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.likes, .favorites{
+    padding: 10px;
+    border: 1px solid pink;
+    margin: 10px 0;
+    width: 340px;
+}
+
+.like-list, .favorite-list{
+    display: flex;
+    align-items: center;
+}
+
+.like-list-img img, .favorite-list-img img{
+    width: 50px;
+    height: 50px;
+}
+
+.like-list-img, .favorite-list-img{
+    width: 20%;
+}
+
+.like-list-content, .favorite-list-content{
+    width: 80%;
+}
+
+.favorite-list-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/* ================오른쪽 사이드 바 끝================= */
+
+
+
+
+
+/* =================== 다크 모드 ======================== */
+.mode-toggle {
+    height: 50px;
+    min-width: 45px;
+    position :absolute;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.mode {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+
+.mode-toggle .switch {
+    position: relative;
+    display: inline-block;
+    height: 22px;
+    width: 40px;
+    background-color: var(--toggle-color);
+    border-radius: 25px ;
+}
+
+.switch::before{
+    content:"";
+    position: absolute;
+    left: 5px;
+    transform: translateY(-50%);
+    top: 50%;
+    height: 15px;
+    width: 15px;
+    background-color: white;
+    border-radius: 50%;
+    transition: var(--tran-03);
+}
+
+body.dark {
+    --blue-color: #3a3b3c;
+    --white-color:#202b38;
+}
+
+body.dark .switch::before {
+    left : 20px;
+}
+
+body.dark .logo-name .logo_name {
+	color: white;
+}
+
+body.dark .top .sidebar-toggle {
+	color : white;
+}
+
+body.dark .right-top {
+    color : white;
+}
+
+body.dark .top .search-box input {
+     color : white;
+}
+
+body.dark
+.nav-links li a:hover i,
+body.dark
+.nav-links li a:hover .link-name{
+    color: white;
+}
+
+body.dark .profile .profile-link.show {
+	background : white;
+	z-index: 100;
+}
+
+body.dark .close {
+	opacity : 1;
+}
+
+/* ============== 미디어 쿼리 ======================== */
+
+@media only screen and (max-width: 600px) {
+    nav{
+        margin: 0;
+        width: 100%;
+       
+    }
+
+    nav.close {
+        width: 100%;
+        z-index: 10;
+    }
+
+    nav.close li a .link-name {
+        opacity: 1;
+        pointer-events: none;
+    }
+
+    .main-content {
+       left: 0;
+       margin: 0;
+       padding: 0;
+       width: 100%;
+    }
+
+    nav.close ~ .main-content .top {
+        
+        position: fixed;
+        left: 73px;
+        width: 88%;
+        margin-right: 0;
+    }
+
+    nav.close ~ .main-content {
+        left: 73px;
+        width: 88%;
+    }
+    
+    .main-content .top {
+        top: 0;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        position: fixed;
+     }
+
+     .main-content .main-feed {
+        margin: 0px;
+        position: relative;
+        min-height: 100vh;
+        width: 100%;
+        padding-top: 70px;
+        transition: var(--tran-05);
+        z-index: 5;
+    }
+    
+
+    nav.close~ .main-content .top .search-box {
+        position: relative;
+        height: 45px;
+        max-width: 800px;
+        width: 100%;
+        margin: 0 30px;
+        display: none;
+    }
+
+ 
+
+
+    nav.close ~ .main-content .main-feed {
+        width: 95%;
+        margin-left: 0%;
+        display: none;
+    }
+
+    .right-sidebar {
+        display: none;
+    }
+  }
+
+
+  @media only screen and (max-width: 964px) {
+
+    .right-sidebar {
+        display: none;
+    }    
+  }
